@@ -9,6 +9,8 @@
   "author": "santiago morales",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.4.0",
+    "cloudinary": "^1.37.0",
     "cors": "^2.8.5",
     "cron": "^2.3.0",
     "dotenv": "^16.0.3",
@@ -16,6 +18,7 @@
     "instagram-private-api": "^1.45.3",
     "loadsh": "^0.0.4",
     "mysql": "^2.18.1",
+    "openai": "^3.2.1",
     "request-promise": "^4.2.6"
   }
 }
