@@ -1,5 +1,7 @@
 const cors = require('cors');
 const express = require('express');
+const requestIp = require('request-ip');
+
 
 class Server{
 
@@ -25,6 +27,8 @@ class Server{
        //uso de archivos json 
         this.app.use((express.json({limit: '50mb'})));
         this.app.use(express.urlencoded({limit: '50mb'}));
+        this.app.use(requestIp.mw());
+
 
     }
 

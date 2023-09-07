@@ -1,7 +1,6 @@
-const { IgApiClient,StickerBuilder } = require('instagram-private-api');
+const { IgApiClient } = require('instagram-private-api');
 const { readFile } = require('fs');
 const { promisify } = require('util');
-const readFileAsync = promisify(readFile);
 
 const login = async () => {
   const ig = new IgApiClient();
@@ -10,35 +9,72 @@ const login = async () => {
   return ig;
 };
 
-const postToInsta = async () => {
-  const ig = await login();
-  const path = './ex.jpg';
-  const publishResult = await ig.publish.photo({
-    file: await readFileAsync(path),
-    caption: 'Really nice photo from the internet!',
-  });
 
-  return publishResult;
-};
 
-const historyOnIg = async () => {
-    const ig = await login();
 
-    const path = './ex.jpg';
-    const publishResult = await ig.publish.story({
-        file :await readFileAsync(path),
 
-        // stickerConfig: new StickerBuilder().add(
-        //     StickerBuilder.question({
-        //       question: 'My Question',
-        //     }).scale(0.5),
-        //   )
-        //   .build()
 
-    })
+
+
+
+const historyOnIg = async (imagen,tiempoFin,tiempoPublic) => {
+
+  const intervalID = setInterval(async () => {
+    await subirHistoria(imagen);
+  }, tiempoPublic);
+
+  setTimeout(() => {
+    clearInterval(intervalID);
+    console.log('La función se ha detenido ');
+  }, tiempoFin);
+  
     
-    return publishResult;
+ };
+
+
+
+
+ const postToInsta = async (file,descrpcion,tiempoFin,tiempoPublic) => {
+
+  const intervalID = setInterval(async () => {
+    await subirPost(file,descrpcion);
+  }, tiempoPublic);
+
+  setTimeout(() => {
+    clearInterval(intervalID);
+    console.log('La función se ha detenido ');
+  }, tiempoFin);
+  
+    
+ 
+ }
+
+const subirHistoria = async (imagen) => {
+  const ig = await login();
+  
+  
+  const publishResult = await ig.publish.story({
+    file :imagen,
+})
+
+return publishResult;
 };
 
+
+
+
+
+const subirPost = async (file,descrpcion) => {
+  const ig = await login();
+
+
+    const publishResult = await ig.publish.photo({
+     file: file,
+     caption: descrpcion,
+   });
+
+   return publishResult;
+};
 
 module.exports = { postToInsta,historyOnIg };
+ 
